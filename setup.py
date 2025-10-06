@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
+from setuptools import setup
 import os
 
 # Read version from version.py
@@ -27,7 +27,8 @@ setup(
         'Bug Reports': 'https://github.com/josemal98/tridesclous-edited/issues',
         'Source': 'https://github.com/josemal98/tridesclous-edited',
     },
-    packages=find_packages(),
+    packages=['tridesclous', 'tridesclous.gui', 'tridesclous.gui.icons', 'tridesclous.online', 'tridesclous.scripts', 'tridesclous.tests'],
+    package_dir={'tridesclous': '.'},
     include_package_data=True,
     package_data={
         '': ['*.txt', '*.md', '*.rst', '*.yml', '*.yaml'],
