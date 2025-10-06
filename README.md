@@ -1,73 +1,114 @@
-# trisdesclous: spike sorting with a [French touch](https://fr.wikipedia.org/wiki/French_touch_(informatique)).
+# Tridesclous-edited: Modified Version for Real-Time Neural Analysis Interface
 
+🔬 **Modified version of tridesclous for Real-Time Neural Analysis Interface**
 
-**trisdesclous is not maintenaned anymore, please user spikeinterface and treidesclous2 instead**
+[![Version](https://img.shields.io/badge/version-1.6.8--neural--interface-blue.svg)](https://github.com/josemal98/tridesclous-edited)
+[![Original](https://img.shields.io/badge/based%20on-tridesclous%201.6.8-green.svg)](https://github.com/tridesclous/tridesclous)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+## 🎯 Overview
 
+This is a **modified version** of [tridesclous](https://github.com/tridesclous/tridesclous) specifically enhanced for the **Real-Time Neural Analysis Interface** project. The modifications focus on improving real-time spike detection capabilities, PyACQ stream integration, and debugging features.
 
-![icon](tridesclous/gui/icons/png/main_icon.png)
+## 🚀 Key Modifications
 
-Authors: Christophe Pouzat and Samuel Garcia
+### **Enhanced OnlinePeeler (`online/onlinepeeler.py`)**
+- ✅ **Robust PyACQ Stream Parameter Handling**: Added timeout-based waiting for stream parameters
+- ✅ **Callback System**: Enhanced callback mechanism for real-time data processing
+- ✅ **Detailed Logging**: Comprehensive debug logging for spike detection monitoring
+- ✅ **Stream Synchronization**: Improved synchronization between PyACQ streams and tridesclous processing
 
-## documentation
+### **Main Changes vs Original v1.6.8**
+```python
+# Enhanced parameter waiting with timeout
+for _ in range(50):  # Wait up to 5 seconds
+    if hasattr(self.input, 'params') and 'sample_rate' in self.input.params:
+        break
+    time.sleep(0.1)
 
-The documentation is here: http://tridesclous.readthedocs.io/
+# Enhanced callback system
+if hasattr(self, '_signal_callback') and callable(self._signal_callback):
+    self._signal_callback(preprocessed_chunk, sig_index)
+    
+if hasattr(self, '_spike_callback') and callable(self._spike_callback):
+    self._spike_callback(spikes, total_spike)
+```
 
-## overview
+## 📋 Installation
 
-**tris des clous** is a very dishonest translation of **spike sorting** to French.
+### **For Real-Time Neural Analysis Interface Project**
+This version is automatically installed when setting up the neural analysis environment:
 
-Pronouce it [tree day clue] in English.
+```bash
+# Clone the main project
+git clone https://github.com/josemal98/Real-Time_Neural_Analysis_Interface.git
 
-The primary goal of tridesclous was to provide a toolkit to teach good practices in spike sorting techniques.
-Trideslcous is now mature and can be used to sort spike on tetrode up to neuropixel probe recorded dataset.
+# Create environment with modified dependencies
+conda env create -f trides_env.yml
+```
 
-Tridesclous is both:
+### **Standalone Installation**
+```bash
+pip install git+https://github.com/josemal98/tridesclous-edited.git
+```
 
-  * an offline spike sorter tools able to read many file format
-  * a realtime spike sorting combined with [pyacq](http://pyacq.readthedocs.io)
+## 🔧 Usage
 
-## Main features
+This modified version maintains full compatibility with original tridesclous usage while providing enhanced real-time capabilities:
 
-  * template matching based method
-  * several alternative methods at several processing steps of the chain
-  * Qt GUI for interactive exploration
-  * a simple python API to use in a notebook or to build a custom pipeline
-  * support for many data formats (Raw, Blackrock, Neuralynx, Plexon, Spike2, Tdt, OpenEphys, ...) via [neo](https://github.com/NeuralEnsemble/python-neo)
-  * hardware acceleration with opencl: both GPU and multicore CPU
-  * smaller memory footprint
-  * built-in sample datasets to try on
-  * quite fast for tetrode datasets -- expect x30 speedup over real time on a simple laptop
-  * multi-platform
-  * open source based on a true open source stack
+```python
+from tridesclous import OnlinePeeler
+# Enhanced version with improved PyACQ integration
+# and real-time spike detection capabilities
+```
 
-The forest of spike sorting tools is dense and *tridesclous* is a new tree.
-Be curious and try it.
+## 📊 Compatibility
 
+- **Base Version**: tridesclous 1.6.8
+- **Python**: 3.7+
+- **PyACQ**: Compatible with custom PyACQ fork
+- **Real-Time Processing**: ✅ Enhanced
+- **Original API**: ✅ Fully compatible
 
-# Installation
+## 🔍 Detailed Modifications
 
-http://tridesclous.readthedocs.io/en/latest/installation.html
+### **1. PeelerThread Enhancements**
+- Added comprehensive logging system for debugging
+- Enhanced spike detection monitoring
+- Improved callback mechanism for wrapper nodes
 
-# Launch
+### **2. Stream Parameter Management**
+- Robust handling of PyACQ stream parameters
+- Timeout-based parameter waiting
+- Better error handling and diagnostics
 
-http://tridesclous.readthedocs.io/en/latest/launch.html
+### **3. Real-Time Processing**
+- Optimized for real-time neural signal processing
+- Enhanced synchronization with external data sources
+- Improved performance monitoring
 
+## 🚦 Status
 
-## Screenshots
+- ✅ **Functional**: All original tridesclous features work
+- ✅ **Enhanced**: Real-time processing capabilities improved  
+- ✅ **Tested**: Validated with Real-Time Neural Analysis Interface
+- ✅ **Maintained**: Updated for project-specific requirements
 
-### Offline Catalogue Window
-![snapshot](doc/img/snapshot_cataloguewindow.png)
+## 📚 Related Projects
 
-### offline Peeler Window
-![snapshot](doc/img/snapshot_peelerwindow.png)
+- **Main Project**: [Real-Time Neural Analysis Interface](https://github.com/josemal98/Real-Time_Neural_Analysis_Interface)
+- **Original Library**: [tridesclous](https://github.com/tridesclous/tridesclous)
+- **PyACQ Fork**: [pyacq-neural-analysis](https://github.com/josemal98/pyacq)
 
-### Online Peeler in a pyacq.Node
-![snapshot](doc/img/online_tridesclous.gif)
+## 📄 License
 
+This project maintains the same MIT license as the original tridesclous library.
 
-## Status
+## 🙏 Acknowledgments
 
-[![readthedocs](https://readthedocs.org/projects/tridesclous/badge/?version=latest&style=flat)]( http://tridesclous.readthedocs.io/en/latest/?badge=latest)
-[![CircleCI](https://circleci.com/gh/tridesclous/tridesclous.svg?style=svg)](https://circleci.com/gh/tridesclous/tridesclous)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/7cqmevwu0r3sq87e?svg=true)](https://ci.appveyor.com/project/samuelgarcia/tridesclous)
+- Original **tridesclous** team for the excellent spike sorting library
+- Modifications made specifically for **Real-Time Neural Analysis Interface** project requirements
+
+---
+
+**⚠️ Note**: This is a specialized version. For general tridesclous usage, please use the [original repository](https://github.com/tridesclous/tridesclous).
