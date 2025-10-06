@@ -14,7 +14,7 @@ with open(readme_file, 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='tridesclous-edited',
+    name='tridesclous',
     version=version,  # From version.py
     author='C. Pouzat, S.Garcia (Original), josemal98 (Neural Analysis Modifications)',
     author_email='',
